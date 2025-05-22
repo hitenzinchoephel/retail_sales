@@ -1,0 +1,11 @@
+
+-- creating temp with row number
+drop table if exists #temp
+select
+  *
+,  row_number() over(partition by invoice_id order by sale_date asc ) rn
+into #temp
+from sale_data
+
+-- get only one record from the temp table by filtering on rn = 1
+select * from #temp where rn = 1
